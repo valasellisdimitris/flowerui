@@ -1,0 +1,70 @@
+# FlowerUI License
+
+This project uses a dual-license structure:
+
+---
+
+## Components License (MIT)
+
+**Applies to:** All files in `/src/components/items/` and `/src/components/universal/`
+
+MIT License
+
+Copyright (c) 2025 Dimitris Valasellis
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of the component files in this repository (located in `/src/components/items/` 
+and `/src/components/universal/`), to deal in the components without restriction, 
+including without limitation the rights to use, copy, modify, merge, publish, 
+distribute, sublicense, and/or sell copies of the components, and to permit 
+persons to whom the components are furnished to do so, subject to the following 
+conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the components.
+
+THE COMPONENTS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE COMPONENTS OR THE USE OR OTHER DEALINGS IN THE
+COMPONENTS.
+
+---
+
+## Website & Application Code (All Rights Reserved)
+
+**Applies to:** All other files including pages, configuration, website structure, 
+and documentation pages (`/src/pages/`, `/src/styles/`, configuration files, etc.)
+
+Copyright (c) 2025 Dimitris Valasellis. All rights reserved.
+
+The website source code, page structure, documentation pages, and all other files 
+not explicitly covered by the Components License above are proprietary and may not 
+be copied, modified, distributed, or used without explicit written permission from 
+the copyright holder.
+
+This includes but is not limited to:
+- `/src/pages/` - All page files
+- `/src/styles/` - Global styles
+- Configuration files (next.config.ts, tailwind.config, etc.)
+- Build and deployment configurations
+
+---
+
+## Summary
+
+✅ **You CAN freely use:**
+- Individual UI components from `/src/components/items/`
+- Universal components from `/src/components/universal/`
+- Copy, modify, and use these components in your own projects (commercial or personal)
+
+❌ **You CANNOT use without permission:**
+- The website structure and pages
+- The FlowerUI documentation website code
+- The overall application architecture and configuration
+
+---
+
+For questions about licensing, contact: [valasellis.me@gmail.com or valasellisdimitris on Github]

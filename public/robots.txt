@@ -1,0 +1,12 @@
+# Allow all search engines to crawl the entire site
+User-agent: *
+Allow: /
+
+# Disallow access to API routes (if any)
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://flowerui.vercel.app/sitemap.xml
+
+# Crawl-delay (optional - prevents overwhelming server)
+# Crawl-delay: 1
