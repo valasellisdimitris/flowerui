@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SEO from "@/components/universal/SEO";
 import Link from "next/link";
 import Header from "@/components/universal/Header";
@@ -345,6 +345,26 @@ export default function DocsPage() {
   const [selectedSection, setSelectedSection] = useState<DocSection>(docSections[0]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Handle URL hash for direct section selection
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1); // Remove '#'
+      if (hash) {
+        const section = docSections.find((s) => s.id === hash);
+        if (section) {
+          setSelectedSection(section);
+        }
+      }
+    };
+
+    // Check hash on mount
+    handleHashChange();
+    
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
   const categories = Array.from(new Set(docSections.map((s) => s.category)));
 
   return (
@@ -408,6 +428,7 @@ export default function DocsPage() {
                         key={section.id}
                         onClick={() => {
                           setSelectedSection(section);
+                          window.location.hash = section.id;
                           setSidebarOpen(false);
                         }}
                         className={`
@@ -442,19 +463,14 @@ export default function DocsPage() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={selectedSection.id}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
               >
                 {/* Breadcrumb */}
                 <div className="mb-6">
-                  <motion.div
-                    className="text-neutral-500 text-sm flex items-center gap-2"
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                  >
+                  <div className="text-neutral-500 text-sm flex items-center gap-2">
                     <span>Docs</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -478,31 +494,22 @@ export default function DocsPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                     </svg>
                     <span className="text-white">{selectedSection.title}</span>
-                  </motion.div>
+                  </div>
                 </div>
 
                 {/* Content */}
-                <motion.article
-                  className="prose prose-invert max-w-none"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.4 }}
-                >
+                <article className="prose prose-invert max-w-none">
                   {selectedSection.content}
-                </motion.article>
+                </article>
 
                 {/* Navigation Footer */}
-                <motion.div
-                  className="mt-12 pt-6 border-t border-neutral-800 flex justify-between items-center"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                >
+                <div className="mt-12 pt-6 border-t border-neutral-800 flex justify-between items-center">
               <button
                 onClick={() => {
                   const currentIndex = docSections.findIndex(s => s.id === selectedSection.id);
                   if (currentIndex > 0) {
                     setSelectedSection(docSections[currentIndex - 1]);
+                    window.location.hash = docSections[currentIndex - 1].id;
                   }
                 }}
                 disabled={docSections.findIndex(s => s.id === selectedSection.id) === 0}
@@ -525,6 +532,7 @@ export default function DocsPage() {
                   const currentIndex = docSections.findIndex(s => s.id === selectedSection.id);
                   if (currentIndex < docSections.length - 1) {
                     setSelectedSection(docSections[currentIndex + 1]);
+                    window.location.hash = docSections[currentIndex + 1].id;
                   }
                 }}
                 disabled={docSections.findIndex(s => s.id === selectedSection.id) === docSections.length - 1}
@@ -542,7 +550,7 @@ export default function DocsPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                 </svg>
               </button>
-                </motion.div>
+                </div>
               </motion.div>
             </AnimatePresence>
           </div>
