@@ -30,9 +30,9 @@ export default function HomePage() {
       <motion.main
         id="main flowerUI"
         className="flex flex-col w-full h-full px-2 sm:px-6 md:px-12 lg:px-[120px] xl:px-[200px] pt-[100px] sm:pt-[140px] md:pt-[180px]"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
       >
         <section
           id="hero"
@@ -40,26 +40,26 @@ export default function HomePage() {
         >
           <motion.div
             className="text-neutral-100 text-xs sm:text-sm md:text-base bg-neutral-800 duration-200 ease-in-out px-2 sm:px-3 py-1 rounded-full flex flex-row gap-2 items-center mb-3 whitespace-nowrap"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
           >
             <span className="w-[5px] h-[5px] bg-blue-500 rounded-full" />
             FlowerUI Released!
           </motion.div>
           <motion.h1
             className="text-white text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center whitespace-pre-line break-words animate-none"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.15 }}
           >
             <span className="">Watch Your Application Bloom</span>
           </motion.h1>
           <motion.p
             className={` text-neutral-100 text-[14px] sm:text-[16px] mt-4 mb-7 text-center`}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.25 }}
           >
             Flawlessly designed and built for growth: FlowerUI provides the
             artisan-quality components <br className="hidden sm:block" /> you
@@ -69,9 +69,9 @@ export default function HomePage() {
           <motion.div
             id="hero-buttons"
             className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.35 }}
           >
             <Link
               href={"/docs"}
@@ -105,41 +105,23 @@ export default function HomePage() {
         <motion.section
           id="hero2 flowerUI"
           className="flex flex-col items-center w-full mb-16"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7, delay: 0.2 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5 }}
         >
           {/* Header */}
           <div className="w-full text-center mb-12">
-            <motion.h2
-              className="text-white text-2xl sm:text-3xl md:text-4xl font-bold mb-3"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
+            <h2 className="text-white text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
               Beautiful Components
-            </motion.h2>
-            <motion.p
-              className="text-neutral-400 text-sm sm:text-base"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
+            </h2>
+            <p className="text-neutral-400 text-sm sm:text-base">
               Copy, paste, and customize. Build faster with production-ready components.
-            </motion.p>
+            </p>
           </div>
 
           {/* Component Showcase Grid */}
-          <motion.div
-            className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-8"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6 }}
-          >
+          <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-8">
             {/* Buttons Demo */}
             <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 sm:p-8">
               <div className="mb-4">
@@ -287,16 +269,10 @@ export default function HomePage() {
               </div>
               <SimpleTable />
             </div>
-          </motion.div>
+          </div>
 
           {/* CTA */}
-          <motion.div
-            className="text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
+          <div className="text-center">
             <Link
               href={"/components"}
               className="inline-flex items-center gap-2 text-neutral-50 bg-neutral-800 hover:bg-neutral-700 duration-200 ease-in-out py-3 px-6 rounded-lg text-sm font-medium"
@@ -317,7 +293,7 @@ export default function HomePage() {
                 />
               </svg>
             </Link>
-          </motion.div>
+          </div>
         </motion.section>
       </motion.main>
       <Footer />
