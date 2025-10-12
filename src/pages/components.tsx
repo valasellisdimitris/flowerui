@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import SEO from "@/components/universal/SEO";
 import Header from "@/components/universal/Header";
 import { motion, AnimatePresence } from "framer-motion";
@@ -806,20 +805,29 @@ export default function MyComponent() {
 ];
 
 export default function ComponentsPage() {
-  const router = useRouter();
   const [selectedComponent, setSelectedComponent] = useState<ComponentItem>(components[0]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarSearch, setSidebarSearch] = useState("");
 
-  // Handle URL params for direct component selection
+  // Handle URL hash for direct component selection
   useEffect(() => {
-    if (router.query.component) {
-      const component = components.find((c) => c.id === router.query.component);
-      if (component) {
-        setSelectedComponent(component);
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1); // Remove '#'
+      if (hash) {
+        const component = components.find((c) => c.id === hash);
+        if (component) {
+          setSelectedComponent(component);
+        }
       }
-    }
-  }, [router.query.component]);
+    };
+
+    // Check hash on mount
+    handleHashChange();
+    
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const categories = Array.from(new Set(components.map((c) => c.category)));
   
@@ -902,6 +910,7 @@ export default function ComponentsPage() {
                       key={component.id}
                       onClick={() => {
                         setSelectedComponent(component);
+                        window.location.hash = component.id;
                         setSidebarOpen(false);
                         setSidebarSearch("");
                       }}
@@ -937,6 +946,7 @@ export default function ComponentsPage() {
                           key={component.id}
                           onClick={() => {
                             setSelectedComponent(component);
+                            window.location.hash = component.id;
                             setSidebarOpen(false);
                           }}
                           className={`
@@ -972,22 +982,17 @@ export default function ComponentsPage() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={selectedComponent.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
               >
                 {/* Component Header */}
                 <div className="mb-6">
-                  <motion.div
-                    className="text-neutral-100 text-xs sm:text-sm bg-neutral-800 duration-200 ease-in-out px-2 sm:px-3 py-1 rounded-full inline-flex flex-row gap-2 items-center mb-3 whitespace-nowrap"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.1 }}
-                  >
+                  <div className="text-neutral-100 text-xs sm:text-sm bg-neutral-800 duration-200 ease-in-out px-2 sm:px-3 py-1 rounded-full inline-flex flex-row gap-2 items-center mb-3 whitespace-nowrap">
                     <span className="w-[5px] h-[5px] bg-blue-500 rounded-full" />
                     {selectedComponent.category}
-                  </motion.div>
+                  </div>
                   <h1 className="text-white text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
                     {selectedComponent.name}
                   </h1>
@@ -999,25 +1004,15 @@ export default function ComponentsPage() {
                 {/* Component Preview */}
                 <div className="mb-6">
                   <h3 className="text-white text-base font-semibold mb-3">Preview</h3>
-                  <motion.div
-                    className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 sm:p-8"
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.2, duration: 0.4 }}
-                  >
+                  <div className="rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 sm:p-8">
                     <div className="flex items-center justify-center min-h-[140px] rounded-lg bg-neutral-950/50 p-4 sm:p-6">
                       {selectedComponent.component}
                     </div>
-                  </motion.div>
+                  </div>
                 </div>
 
                 {/* Code Section */}
-                <motion.div
-                  className="mb-6"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                >
+                <div className="mb-6">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-white text-base font-semibold">Usage</h3>
                 <a
@@ -1042,7 +1037,7 @@ export default function ComponentsPage() {
                   <code>{selectedComponent.code}</code>
                 </pre>
               </div>
-                </motion.div>
+                </div>
               </motion.div>
             </AnimatePresence>
           </div>
