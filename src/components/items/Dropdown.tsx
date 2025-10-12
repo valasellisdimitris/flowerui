@@ -1,14 +1,42 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function Dropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState("Select an option");
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const options = ["Option 1", "Option 2", "Option 3"];
+
+  // Outside click handler
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      const target = event.target as Node;
+
+      // Don't close if clicking on the trigger button
+      if (buttonRef.current?.contains(target)) {
+        return;
+      }
+
+      // Close if clicking outside the dropdown
+      if (dropdownRef.current && !dropdownRef.current.contains(target)) {
+        setIsOpen(false);
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   return (
     <div className="relative w-full max-w-md">
       <button
+        ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
         className="
           w-full
@@ -42,7 +70,7 @@ export default function Dropdown() {
       </button>
 
       {isOpen && (
-        <div className="absolute z-10 w-full mt-2 bg-neutral-900 border border-neutral-800 rounded-lg shadow-lg overflow-hidden">
+        <div ref={dropdownRef} className="absolute z-10 w-full mt-2 bg-neutral-900 border border-neutral-800 rounded-lg shadow-lg overflow-hidden">
           {options.map((option) => (
             <button
               key={option}
